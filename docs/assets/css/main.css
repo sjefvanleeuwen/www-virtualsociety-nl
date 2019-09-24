@@ -3461,6 +3461,9 @@
 
 			header.major {
 				padding: 0 4em;
+				text-align: center;
+				text-justify: unset;
+
 			}
 
 		/* Box */
