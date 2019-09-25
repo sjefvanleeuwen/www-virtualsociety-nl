@@ -2046,7 +2046,7 @@
 
 	header.major {
 		padding: 1em 0;
-		text-align: justify;
+		/* text-align: justify; */
   		text-justify: inter-word;
 	}
 
