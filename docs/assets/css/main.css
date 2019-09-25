@@ -3170,7 +3170,7 @@
 	#banner {
 		background-attachment: scroll,							fixed;
 		background-color: #666;
-		background-image: url("images/overlay.png"), url("images/eye.jpg");
+		background-image: url("images/overlay.png"), url("../../images/leaf.jpg");
 		background-position: top left,						center center;
 		background-repeat: repeat,							no-repeat;
 		background-size: auto,							cover;
@@ -3386,7 +3386,7 @@
 		/* Banner */
 
 			#banner {
-				padding: 10em 0 18em 0;
+				padding: 5em 0 10em 0;
 			}
 
 	}
@@ -3424,6 +3424,9 @@
 	@media screen and (max-width: 980px) {
 
 		/* Basic */
+			#banner {
+				padding: 5em 0 10em 0;
+			}
 
 			body, input, select, textarea {
 				font-size: 11pt;
@@ -3436,10 +3439,16 @@
 	#navPanel, #navButton {
 		display: none;
 	}
+			#banner {
+				padding: 5em 0 10em 0;
+			}
 
 	@media screen and (max-width: 840px) {
 
 		/* Basic */
+			#banner {
+				padding: 5em 0 10em 0;
+			}
 
 			html, body {
 				overflow-x: hidden;
@@ -3748,7 +3757,8 @@
 		/* Banner */
 
 			#banner {
-				padding: 4em 0;
+				
+				padding: 5em 0;
 			}
 
 				#banner h2 {
