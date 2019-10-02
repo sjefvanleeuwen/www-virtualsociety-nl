@@ -1,0 +1,16 @@
+{
+"companyName": "DefaultCompany",
+"productName": "City Generator",
+"productVersion": "1.0",
+"dataUrl": "Virtual Society City.data.unityweb",
+"wasmCodeUrl": "Virtual Society City.wasm.code.unityweb",
+"wasmFrameworkUrl": "Virtual Society City.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.2.6f1"
+}
