@@ -1,0 +1,377 @@
+<!DOCTYPE HTML>
+<!--
+	Alpha by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Virtual Society::Ontologie - Force Feedback Graph</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<script src="https://d3js.org/d3.v4.min.js" type="text/javascript"></script>
+		<script src="https://d3js.org/d3-selection-multi.v1.js"></script>
+		<style type="text/css">
+			.node {}
+	
+			.link { stroke: #000; stroke-opacity: 0.1; stroke-width: 2px; }
+		</style>
+	</head>
+	<body class="is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header">
+					<h1><a href="../../index.html">Virtual Society</a> open social innovation</h1>
+					<nav id="nav">
+						<ul>
+							<li><a href="../../index.html">Home</a></li>
+							<!-- <li>
+								<a href="#" class="icon solid fa-angle-down">Layouts</a>
+								<ul>
+									<li><a href="../../generic.html">Generic</a></li>
+									<li><a href="../../contact.html">Contact</a></li>
+									<li><a href="../../elements.html">Elements</a></li>
+									<li>
+										<a href="#">Submenu</a>
+										<ul>
+											<li><a href="#">Option One</a></li>
+											<li><a href="#">Option Two</a></li>
+											<li><a href="#">Option Three</a></li>
+											<li><a href="#">Option Four</a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li><a href="#" class="button">Sign Up</a></li> -->
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Main -->
+				<section id="main" class="container">
+					<header>
+						<h2>Ontologie</h2>
+						<p>Visualisatie middels Force Feedback Graphs</p>
+					</header>
+					<svg class="box" height="500" style="border: solid 2px;width:100%;box-sizing:100%"></svg>
+						<div class="box">
+						<!-- <span class="image featured"><img src="../../images/pic01.jpg" alt="" /></span> -->
+						<h3>Code voorbeeld met Triple store</h3>
+						<p>Onderstaande code genereert een triple store met nodes, welke predicaten bevatten waaronder:</p>
+							<ul>
+								<li>Registered At</li>
+								<li>Parent Of</li>
+								<li>Married To</li>
+							</ul>
+							<p>
+							In de store worden personen en instanties zoals BRP opgeslagen. De predicaten zijn voorzien van
+							temporale aspecten (ActualDateTime) vanuit de Discrete Event Simulatie. Door de simulatie af spelen
+							ontstaat er over tijd zo bijvoorbeeld een gezinssituatie.
+						</p>
+						<div class="row"></div>
+						<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #0000ff">using</span> Newtonsoft.Json;
+<span style="color: #0000ff">using</span> System;
+<span style="color: #0000ff">using</span> System.Collections.Generic;
+<span style="color: #0000ff">using</span> VirtualSociety.Ontology.Model;
+<span style="color: #0000ff">using</span> VirtualSociety.Ontology.Model.Predicate;
+<span style="color: #0000ff">using</span> VirtualSociety.Ontology.Model.Registrations;
+<span style="color: #0000ff">using</span> Xunit;
+
+<span style="color: #0000ff">namespace</span> VirtualSociety.Ontology.Tests {
+ <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> <span style="color: #2b91af">TripleTests</span> {
+  [Fact]
+  <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Timeline() {
+   <span style="color: #008000">/* CONSIDER THE FOLLOWING TIME LINE</span>
+<span style="color: #008000">    * --------------------------------</span>
+<span style="color: #008000">    * </span>
+<span style="color: #008000">    * The Bureau of BRP registers people (it exsits since 50 years)</span>
+<span style="color: #008000">    * The mother of a child is born (and registered) at BRP 32 years ago.</span>
+<span style="color: #008000">    * The father of that same child is born (and registered) at the BRP 30 years ago.</span>
+<span style="color: #008000">    * They&#39;ve known each other for 15 years and got married 8 years ago. </span>
+<span style="color: #008000">    * The registration of marriage is also registered at the BRP.</span>
+<span style="color: #008000">    * 3 years after mariage, a child gets born, and is also registered at the BRP.</span>
+<span style="color: #008000">    * </span>
+<span style="color: #008000">    */</span>
+   <span style="color: #2b91af">var</span> Brp = <span style="color: #0000ff">new</span> Brp(DateTime.Now.AddYears(-50));
+   <span style="color: #2b91af">var</span> mother = <span style="color: #0000ff">new</span> Person(DateTime.Now.AddYears(-32));
+   <span style="color: #2b91af">var</span> father = <span style="color: #0000ff">new</span> Person(DateTime.Now.AddYears(-30));
+   <span style="color: #2b91af">var</span> child = <span style="color: #0000ff">new</span> Person(DateTime.Now.AddYears(-5));
+   <span style="color: #2b91af">var</span> married = <span style="color: #0000ff">new</span> MarriedTo(DateTime.Now.AddYears(-8));
+
+   <span style="color: #008000">// Create an ordered time line, for graph visualization.</span>
+   <span style="color: #2b91af">var</span> timeline = <span style="color: #0000ff">new</span> List &lt; <span style="color: #2b91af">object</span> &gt; () {
+    Brp,
+    mother,
+    father,
+    <span style="color: #0000ff">new</span> Triple &lt; Person,
+    Brp &gt; (mother, <span style="color: #0000ff">new</span> RegisteredAt(DateTime.Now.AddYears(-32)), Brp),
+    <span style="color: #0000ff">new</span> Triple &lt; Person,
+    Brp &gt; (father, <span style="color: #0000ff">new</span> RegisteredAt(DateTime.Now.AddYears(-30)), Brp),
+    <span style="color: #008000">// Notice that predicates can also be nodes (used for grouping two subjects)</span>
+    <span style="color: #0000ff">new</span> Triple &lt; MarriedTo,
+    Brp &gt; (married, <span style="color: #0000ff">new</span> RegisteredAt(DateTime.Now.AddYears(-8)), Brp),
+    child,
+    <span style="color: #0000ff">new</span> Triple &lt; Person,
+    Brp &gt; (child, <span style="color: #0000ff">new</span> RegisteredAt(DateTime.Now.AddYears(-5)), Brp),
+    <span style="color: #0000ff">new</span> Triple &lt; Person,
+    Person &gt; (mother, <span style="color: #0000ff">new</span> ParentOf(DateTime.Now.AddYears(-5)), child),
+    <span style="color: #0000ff">new</span> Triple &lt; Person,
+    Person &gt; (father, <span style="color: #0000ff">new</span> ParentOf(DateTime.Now.AddYears(-5)), child),
+   };
+   <span style="color: #008000">/// The RAW datafile.</span>
+   <span style="color: #2b91af">var</span> json = JsonConvert.SerializeObject(timeline, Formatting.Indented);
+  }
+ }
+}
+</pre></td></tr></table></div>
+
+						<!-- <div class="row">
+							<div class="row-6 row-12-mobilep">
+								<h3>And now a subheading</h3>
+								<p>Adipiscing faucibus nunc placerat. Tempus adipiscing turpis non blandit accumsan eget lacinia nunc integer interdum amet aliquam ut orci non col ut ut praesent. Semper amet interdum mi. Phasellus enim laoreet ac ac commodo faucibus faucibus. Curae lorem ipsum adipiscing ac. Vivamus ornare laoreet odio vis praesent.</p>
+							</div>
+							<div class="row-6 row-12-mobilep">
+								<h3>And another subheading</h3>
+								<p>Adipiscing faucibus nunc placerat. Tempus adipiscing turpis non blandit accumsan eget lacinia nunc integer interdum amet aliquam ut orci non col ut ut praesent. Semper amet interdum mi. Phasellus enim laoreet ac ac commodo faucibus faucibus. Curae lorem ipsum adipiscing ac. Vivamus ornare laoreet odio vis praesent.</p>
+							</div>
+						</div> -->
+					</div>
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+					<!-- <ul class="icons">
+						<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
+						<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+						<li><a href="#" class="icon brands fa-google-plus"><span class="label">Google+</span></a></li>
+					</ul> -->
+					<ul class="copyright">
+						<li>&copy; Virtual Society. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/jquery.dropotron.min.js"></script>
+			<script src="../../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+	<script type="text/javascript">
+$(document).ready(function() {
+		var colors = d3.scaleOrdinal(d3.schemeCategory10);
+	
+		var svg = d3.select("svg"),
+			width = 900,
+			height = +svg.attr("height"),
+			node,
+			link;
+	
+		svg.append('defs').append('marker')
+			.attrs({'id':'arrowhead',
+				'viewBox':'-0 -5 1 13',
+				'refX':13,
+				'refY':0,
+				'orient':'auto',
+				'markerWidth':10,
+				'markerHeight':10,
+				'xoverflow':'visible'})
+			.append('svg:path')
+			.attr('d', 'M 0,-5 L 10 ,0 L 0,5')
+			.attr('fill', '#000')
+			.style('stroke','none');
+	
+		var simulation = d3.forceSimulation()
+			.force("link", d3.forceLink().id(function (d) {return d.id;}).distance(300).strength(1))
+			.force("charge", d3.forceManyBody())
+			.force("center", d3.forceCenter(width / 2, height / 2.5));
+	
+		d3.json("graph.json", function (error, graph) {
+			if (error) throw error;
+			update(graph.links, graph.nodes);
+		})
+	
+		function update(links, nodes) {
+			link = svg.selectAll(".link")
+				.data(links)
+				.enter()
+				.append("line")
+				.attr("class", "link")
+				.attr('marker-end','url(#arrowhead)')
+	
+			link.append("title")
+				.text(function (d) {return d.type;});
+	
+			edgepaths = svg.selectAll(".edgepath")
+				.data(links)
+				.enter()
+				.append('path')
+				.attrs({
+					'class': 'edgepath',
+					'fill-opacity': 0,
+					'stroke-opacity': 0,
+					'id': function (d, i) {return 'edgepath' + i}
+				})
+				.style("pointer-events", "none");
+	
+			edgelabels = svg.selectAll(".edgelabel")
+				.data(links)
+				.enter()
+				.append('text')
+				.style("pointer-events", "none")
+				.attrs({
+					'class': 'edgelabel',
+					'id': function (d, i) {return 'edgelabel' + i},
+					'font-size': 10,
+					'fill': '#000'
+				});
+	
+			edgelabels.append('textPath')
+				.attr('xlink:href', function (d, i) {return '#edgepath' + i})
+				.style("text-anchor", "middle")
+				.style("pointer-events", "none")
+				.attr("startOffset", "50%")
+				.text(function (d) {return d.type});
+	
+			node = svg.selectAll(".node")
+				.data(nodes)
+				.enter()
+				.append("g")
+				.attr("class", "node")
+				.call(d3.drag()
+						.on("start", dragstarted)
+						.on("drag", dragged)
+						//.on("end", dragended)
+				);
+	
+			node.append("circle")
+				.attr("r", 10)
+				.style("fill", function (d, i) {return colors(i);})
+	
+			node.append("title")
+				.text(function (d) {return d.id;});
+	
+			node.append("text")
+			.attr("dy", -8)
+			.attr("dx", 8)
+				.attr("font-size", 14)
+				.text(function (d) {return d.name+":"+d.label;});
+	
+			simulation
+				.nodes(nodes)
+				.on("tick", ticked);
+	
+			simulation.force("link")
+				.links(links);
+		}
+	
+		function ticked() {
+			link
+				.attr("x1", function (d) {return d.source.x;})
+				.attr("y1", function (d) {return d.source.y;})
+				.attr("x2", function (d) {return d.target.x;})
+				.attr("y2", function (d) {return d.target.y;});
+	
+			node
+				.attr("transform", function (d) {return "translate(" + d.x + ", " + d.y + ")";});
+	
+			edgepaths.attr('d', function (d) {
+				return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
+			});
+	
+			edgelabels.attr('transform', function (d) {
+				if (d.target.x < d.source.x) {
+					var bbox = this.getBBox();
+	
+					rx = bbox.x + bbox.width / 2;
+					ry = bbox.y + bbox.height / 2;
+					return 'rotate(180 ' + rx + ' ' + ry + ')';
+				}
+				else {
+					return 'rotate(0)';
+				}
+			});
+		}
+	
+		function dragstarted(d) {
+			if (!d3.event.active) simulation.alphaTarget(0.3).restart()
+			d.fx = d.x;
+			d.fy = d.y;
+		}
+	
+		function dragged(d) {
+			d.fx = d3.event.x;
+			d.fy = d3.event.y;
+		}
+	
+	//    function dragended(d) {
+	//        if (!d3.event.active) simulation.alphaTarget(0);
+	//        d.fx = undefined;
+	//        d.fy = undefined;
+	//    }
+});
+	</script>
+</html>

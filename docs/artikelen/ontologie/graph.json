@@ -1,0 +1,57 @@
+{
+    "nodes": [
+      {
+        "name": "Rudolf van Veen",
+        "label": "Person",
+        "id": 1
+      },
+      {
+        "name": "Angela van Veen",
+        "label": "Person",
+        "id": 2
+      },
+      {
+        "name": "Dirk van Veen",
+        "label": "Person",
+        "id": 3
+      },
+      {
+        "name": "BRP",
+        "label": "Registratie",
+        "id": 4
+      }
+    ],
+    "links": [
+      {
+        "source": 1,
+        "target": 2,
+        "type": "MARRIED TO",
+        "since": 2010
+      },
+      {
+        "source": 1,
+        "target": 3,
+        "type": "PARENT OF"
+      },
+      {
+        "source": 2,
+        "target": 3,
+        "type": "PARENT OF"
+      },
+      {
+        "source": 1,
+        "target": 4,
+        "type": "REGISTERED AT"
+      },
+      {
+        "source": 2,
+        "target": 4,
+        "type": "REGISTERED AT"
+      },
+      {
+        "source": 3,
+        "target": 4,
+        "type": "REGISTERED AT"
+      }
+    ]
+  }
