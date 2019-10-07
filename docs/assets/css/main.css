@@ -3526,7 +3526,7 @@
 				padding-bottom: 1px;
 			}
 
-			/* #navButton {
+			#navButton {
 				-moz-backface-visibility: hidden;
 				-webkit-backface-visibility: hidden;
 				-ms-backface-visibility: hidden;
@@ -3672,7 +3672,7 @@
 				-webkit-transform: translateX(0);
 				-ms-transform: translateX(0);
 				transform: translateX(0);
-			} */
+			}
 
 	}
 
